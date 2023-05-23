@@ -15,7 +15,7 @@ ethp = 10
 def check_bound(obj: pg.Rect) -> tuple[bool, bool]:
     """
     オブジェクトが画面内か画面外かを判定し，真理値タプルを返す
-    引数 obj：オブジェクト（爆弾，こうかとん，ビーム）SurfaceのRect
+    引数 obj：オブジェクSurfaceのRect
     戻り値：横方向，縦方向のはみ出し判定結果（画面内：True／画面外：False）
     """
     yoko, tate = True, True
@@ -31,13 +31,12 @@ def check_bound(obj: pg.Rect) -> tuple[bool, bool]:
 
 class Pltower(pg.sprite.Sprite):
     """
-    ゲームキャラクター（こうかとん）に関するクラス
+    ゲームキャラクター（塔）に関するクラス
     """
     def __init__(self, xy: tuple[int, int]):
         """
-        こうかとん画像Surfaceを生成する
-        引数1 num：こうかとん画像ファイル名の番号
-        引数2 xy：こうかとん画像の位置座標タプル
+        塔画像Surfaceを生成する
+        引数1 xy：塔画像の位置座標タプル
         """
         super().__init__()
         
@@ -53,11 +52,7 @@ class Pltower(pg.sprite.Sprite):
 
 
     def update(self,screen: pg.Surface):
-        """
-        押下キーに応じてこうかとんを移動させる
-        引数1 key_lst：押下キーの真理値リスト
-        引数2 screen：画面Surface
-        """
+        
         
         screen.blit(self.image, self.rect)
     
@@ -69,9 +64,8 @@ class Pltower(pg.sprite.Sprite):
 class Entower(pg.sprite.Sprite):
     def __init__(self, xy: tuple[int, int]):
         """
-        こうかとん画像Surfaceを生成する
-        引数1 num：こうかとん画像ファイル名の番号
-        引数2 xy：こうかとん画像の位置座標タプル
+        塔画像Surfaceを生成する
+        引数1 xy：塔画像の位置座標タプル
         """
         super().__init__()
         
@@ -132,12 +126,12 @@ class Bomb(pg.sprite.Sprite):
 
 class Plchara(pg.sprite.Sprite):
     """
-    ビームに関するクラス
+    こうかとんキャノンに関するクラス
     """
     def __init__(self, pltower: Pltower):
         """
         ビーム画像Surfaceを生成する
-        引数 pltower：ビームを放つこうかとん
+        引数 pltower：こうかとんキャノンを放つ塔
         """
         super().__init__()
         self.vx, self.vy = pltower.get_direction()
@@ -300,10 +294,9 @@ def main():
                 time.sleep(2)
                 return
         if len(pg.sprite.spritecollide(pltower, emys, True)) != 0:
-            font1 = pygame.font.SysFont("hg正楷書体pro", 400)
+            font1 = pygame.font.SysFont("hg正楷書体pro", 400)  # 敗北ロゴ生成
             font2 = pygame.font.SysFont(None, 300)
             
-            #STEP2.テキストの設定
             text1 = font1.render("敗北", True, (255,0,0))
             text2 = font2.render("LOSE", True, (255,0,0))
             screen.blit(text1, (WIDTH/2-400,HEIGHT/2-400))
@@ -316,10 +309,9 @@ def main():
             time.sleep(2)
             return
         if len(pg.sprite.spritecollide(entower, plcharas, True)) != 0:
-            font1 = pygame.font.SysFont("hg正楷書体pro", 400)
+            font1 = pygame.font.SysFont("hg正楷書体pro", 400)  # 勝利ロゴ生成
             font2 = pygame.font.SysFont(None, 300)
             
-            #STEP2.テキストの設定
             text1 = font1.render("勝利", True, (255,255,0))
             text2 = font2.render("WIN", True, (255,255,0))
             screen.blit(text1, (WIDTH/2-400,HEIGHT/2-400))
