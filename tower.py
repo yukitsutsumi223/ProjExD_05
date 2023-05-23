@@ -265,8 +265,9 @@ def main():
                 score.score += 100
             if event.type == pg.KEYDOWN and event.key == pg.K_BACKSPACE:
                 emys.add(Enemy())
-            
-
+        if tmr%200 == 0:  # 200フレームに1回，敵機を出現させる
+                emys.add(Enemy())    
+    
         screen.blit(bg_img, [0, 0])
 
 
